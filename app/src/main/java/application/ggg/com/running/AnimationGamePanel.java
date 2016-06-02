@@ -9,6 +9,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -40,14 +41,19 @@ public class AnimationGamePanel extends SurfaceView implements SurfaceHolder.Cal
         getHolder().addCallback(this);
         getHolder().setFormat(PixelFormat.TRANSPARENT);
 
+        int animationSize128 = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 128, getResources().getDisplayMetrics());
+        int animationSize123 = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 123, getResources().getDisplayMetrics());
+        int animationSize64 = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 64, getResources().getDisplayMetrics());
+        int animationSize10 = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, getResources().getDisplayMetrics());
+
         // create Elaine and load bitmap
         if (animationType == 1) {
-            elaine = new StickmanAnimated(BitmapFactory.decodeResource(getResources(), R.mipmap.running), 10, 50    // initial position
-                    , 123, 128    // width and height of sprite
+            elaine = new StickmanAnimated(BitmapFactory.decodeResource(getResources(), R.mipmap.running), animationSize128/5, animationSize10    // initial position
+                    , animationSize123, animationSize128    // width and height of sprite
                     , 14, 7);    // FPS and number of frames in the animation
         } else {
-            elaine = new StickmanAnimated(BitmapFactory.decodeResource(getResources(), R.mipmap.walk), 50, 40    // initial position
-                    , 64, 128    // width and height of sprite
+            elaine = new StickmanAnimated(BitmapFactory.decodeResource(getResources(), R.mipmap.walk), animationSize128/4 + animationSize10, animationSize10    // initial position
+                    , animationSize64, animationSize128    // width and height of sprite
                     , 24, 12);    // FPS and number of frames in the animation
         }
 

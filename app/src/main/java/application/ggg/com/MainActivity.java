@@ -105,14 +105,16 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
         mCircularBarPagerSelection3 = (CircularBarPager) findViewById(R.id.circularBarPager3);
         mCircularBarPagerSelection4 = (CircularBarPager) findViewById(R.id.circularBarPager4);
 
+        int animationSize = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 128, getResources().getDisplayMetrics());
+
         containerRunning = (RelativeLayout) findViewById(R.id.containerRunning);
         AnimationGamePanel gamePanelRunning = new AnimationGamePanel(this, ANIMATION_RUNNING);
-        gamePanelRunning.setLayoutParams(new LinearLayout.LayoutParams(170, 170));
+        gamePanelRunning.setLayoutParams(new LinearLayout.LayoutParams(animationSize, animationSize));
         containerRunning.addView(gamePanelRunning);
 
         containerWalking = (RelativeLayout) findViewById(R.id.containerWalking);
         AnimationGamePanel gamePanelWalking = new AnimationGamePanel(this, ANIMATION_WALKING);
-        gamePanelWalking.setLayoutParams(new LinearLayout.LayoutParams(170, 170));
+        gamePanelWalking.setLayoutParams(new LinearLayout.LayoutParams(animationSize, animationSize));
         containerWalking.addView(gamePanelWalking);
 
         pieValues = new LinkedList<>();
