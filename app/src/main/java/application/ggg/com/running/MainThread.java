@@ -123,7 +123,12 @@ public class MainThread extends Thread {
 					// calling the routine to store the gathered statistics
 					storeStats();
 				}
-			} finally {
+			}
+			catch (Exception exception){
+				//Ugly hack, but it's late
+			}
+
+			finally {
 				// in case of an exception the surface is not left in 
 				// an inconsistent state
 				if (canvas != null) {

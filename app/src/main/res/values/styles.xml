@@ -1,11 +1,20 @@
 <resources>
 
+
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@android:color/white</item>
+        <item name="android:windowBackground">@color/black_windows_color</item>
+        <item name="android:actionMenuTextAppearance">@style/TextView.DefaultStyle</item>
+        <item name="android:actionOverflowMenuStyle">@style/TextView.DefaultStyle</item>
+        <item name="android:listPreferredItemHeightSmall">72dp</item>
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="TextView.DefaultStyle">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/menu_text_size</item>
+
     </style>
 
     <style name="CircularBarPagerStyle">
