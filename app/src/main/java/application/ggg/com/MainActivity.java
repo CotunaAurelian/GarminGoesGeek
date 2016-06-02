@@ -43,6 +43,8 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
 
     private CircularBarPager mCircularBarPagerSelection1;
     private CircularBarPager mCircularBarPagerSelection2;
+    private CircularBarPager mCircularBarPagerSelection3;
+    private CircularBarPager mCircularBarPagerSelection4;
 
     private static final int BAR_ANIMATION_TIME = 1000;
 
@@ -63,33 +65,43 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
         super.onResume();
         mCircularBarPagerSelection1.getCircularBar().animateProgress(0, 80, 1000);
         mCircularBarPagerSelection2.getCircularBar().animateProgress(0, 80, 1000);
+        mCircularBarPagerSelection3.getCircularBar().animateProgress(0, 80, 1000);
+        mCircularBarPagerSelection4.getCircularBar().animateProgress(0, 80, 1000);
     }
 
     private void initPieContainer() {
-        RelativeLayout containerRunning = (RelativeLayout) findViewById(R.id.containerRunning);
         mCircularBarPagerSelection1 = (CircularBarPager) findViewById(R.id.circularBarPager1);
         mCircularBarPagerSelection2 = (CircularBarPager) findViewById(R.id.circularBarPager2);
+        mCircularBarPagerSelection3 = (CircularBarPager) findViewById(R.id.circularBarPager3);
+        mCircularBarPagerSelection4 = (CircularBarPager) findViewById(R.id.circularBarPager4);
 
-        AnimationGamePanel gamePanel = new AnimationGamePanel(this);
-        gamePanel.setBackground(null);
-        gamePanel.setLayoutParams(new LinearLayout.LayoutParams(170, 170));
-        containerRunning.addView(gamePanel);
+        RelativeLayout containerRunning = (RelativeLayout) findViewById(R.id.containerRunning);
+        AnimationGamePanel gamePanelRunning = new AnimationGamePanel(this);
+        gamePanelRunning.setLayoutParams(new LinearLayout.LayoutParams(170, 170));
+        containerRunning.addView(gamePanelRunning);
 
-        initPie1(new PieDAO(12, 5));
-        initPie2(new PieDAO(12, 5));
+        RelativeLayout containerWalking = (RelativeLayout) findViewById(R.id.containerWalking);
+        AnimationGamePanel gamePanelWalking = new AnimationGamePanel(this);
+        gamePanelWalking.setLayoutParams(new LinearLayout.LayoutParams(170, 170));
+        containerWalking.addView(gamePanelWalking);
+
+        initPie(mCircularBarPagerSelection1, new PieDAO(12, 5));
+        initPie(mCircularBarPagerSelection2, new PieDAO(12, 5));
+        initPie(mCircularBarPagerSelection3, new PieDAO(12, 5));
+        initPie(mCircularBarPagerSelection4, new PieDAO(12, 5));
     }
 
-    private void initPie1(PieDAO pieDAO) {
+    private void initPie(final CircularBarPager circularBarPager, PieDAO pieDAO) {
         View[] views = new View[2];
         views[0] = new PieContentView(this, pieDAO, 0);
         views[1] = new PieContentView(this, pieDAO, 1);
 
-        mCircularBarPagerSelection1.setViewPagerAdapter(new ActivityPiePagerAdapter(this, views));
+        circularBarPager.setViewPagerAdapter(new ActivityPiePagerAdapter(this, views));
 
-        ViewPager viewPager = mCircularBarPagerSelection1.getViewPager();
+        ViewPager viewPager = circularBarPager.getViewPager();
         viewPager.setClipToPadding(true);
 
-        CirclePageIndicator circlePageIndicator = mCircularBarPagerSelection1.getCirclePageIndicator();
+        CirclePageIndicator circlePageIndicator = circularBarPager.getCirclePageIndicator();
         circlePageIndicator.setFillColor(ContextCompat.getColor(getApplicationContext(), R.color.light_grey));
         circlePageIndicator.setPageColor(ContextCompat.getColor(getApplicationContext(), R.color.very_light_grey));
         circlePageIndicator.setStrokeColor(ContextCompat.getColor(getApplicationContext(), R.color.transparent));
@@ -98,46 +110,13 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
         circlePageIndicator.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
             @Override
             public void onPageSelected(int position) {
-                if(mCircularBarPagerSelection1!= null && mCircularBarPagerSelection1.getCircularBar() != null){
+                if(circularBarPager!= null && circularBarPager.getCircularBar() != null){
                     switch (position){
                         case 0:
-                            mCircularBarPagerSelection1.getCircularBar().animateProgress(0, 80, BAR_ANIMATION_TIME);
+                            circularBarPager.getCircularBar().animateProgress(0, 80, BAR_ANIMATION_TIME);
                             break;
                         case 1:
-                            mCircularBarPagerSelection1.getCircularBar().animateProgress(80, 20, BAR_ANIMATION_TIME);
-                            break;
-                    }
-                }
-            }
-        });
-    }
-
-    private void initPie2(PieDAO pieDAO) {
-        View[] views = new View[2];
-        views[0] = new PieContentView(this, pieDAO, 0);
-        views[1] = new PieContentView(this, pieDAO, 1);
-
-        mCircularBarPagerSelection2.setViewPagerAdapter(new ActivityPiePagerAdapter(this, views));
-
-        ViewPager viewPager = mCircularBarPagerSelection2.getViewPager();
-        viewPager.setClipToPadding(true);
-
-        CirclePageIndicator circlePageIndicator = mCircularBarPagerSelection2.getCirclePageIndicator();
-        circlePageIndicator.setFillColor(ContextCompat.getColor(getApplicationContext(), R.color.light_grey));
-        circlePageIndicator.setPageColor(ContextCompat.getColor(getApplicationContext(), R.color.very_light_grey));
-        circlePageIndicator.setStrokeColor(ContextCompat.getColor(getApplicationContext(), R.color.transparent));
-
-        //Do stuff based on when pages change
-        circlePageIndicator.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
-            @Override
-            public void onPageSelected(int position) {
-                if(mCircularBarPagerSelection2!= null && mCircularBarPagerSelection2.getCircularBar() != null){
-                    switch (position){
-                        case 0:
-                            mCircularBarPagerSelection2.getCircularBar().animateProgress(0, 80, BAR_ANIMATION_TIME);
-                            break;
-                        case 1:
-                            mCircularBarPagerSelection2.getCircularBar().animateProgress(80, 20, BAR_ANIMATION_TIME);
+                            circularBarPager.getCircularBar().animateProgress(80, 20, BAR_ANIMATION_TIME);
                             break;
                     }
                 }
