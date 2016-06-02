@@ -30,6 +30,7 @@ import com.yalantis.contextmenu.lib.interfaces.OnMenuItemLongClickListener;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 import com.github.OrangeGangsters.circularbarpager.library.CircularBarPager;
 import com.viewpagerindicator.CirclePageIndicator;
@@ -66,8 +67,8 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
     private RelativeLayout containerRunning;
     private RelativeLayout containerWalking;
 
-    private Button mTodayButton;
-    private Button mYesterdayButton;
+    private int currentSelection;
+    private int pastSelection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,16 +79,7 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
         initToolbar();
 
         initPieContainer();
-        initPieContainer();
-
         initActivitiesChart();
-
-        initBottomSection();
-    }
-
-    private void initBottomSection(){
-        mTodayButton = (Button) findViewById(R.id.text7);
-        mYesterdayButton = (Button) findViewById(R.id.text6);
     }
 
     private void initActivitiesChart() {
@@ -99,6 +91,10 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
     protected void onResume() {
         super.onResume();
 
+        animatePies();
+    }
+
+    private void animatePies() {
         mCircularBarPagerSelection1.getCircularBar().animateProgress(0, pieValues.get(0).getTime() * 100 / GOAL_RUNNING_TIME, 1000);
         mCircularBarPagerSelection2.getCircularBar().animateProgress(0, pieValues.get(1).getTime() * 100 / GOAL_RUNNING_TIME, 1000);
         mCircularBarPagerSelection3.getCircularBar().animateProgress(0, pieValues.get(2).getTime() * 100 / GOAL_WALKING_TIME, 1000);
@@ -123,13 +119,14 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
         gamePanelWalking.setLayoutParams(new LinearLayout.LayoutParams(animationSize, animationSize));
         containerWalking.addView(gamePanelWalking);
 
+        Random r = new Random();
         pieValues = new LinkedList<>();
         // Running
-        pieValues.add(new PieDAO(8, 8, ANIMATION_RUNNING));
-        pieValues.add(new PieDAO(7, 5, ANIMATION_RUNNING));
+        pieValues.add(new PieDAO(r.nextInt(GOAL_RUNNING_TIME), r.nextInt(GOAL_RUNNING_DISTANCE), ANIMATION_RUNNING));
+        pieValues.add(new PieDAO(r.nextInt(GOAL_RUNNING_TIME), r.nextInt(GOAL_RUNNING_DISTANCE), ANIMATION_RUNNING));
         // Walking
-        pieValues.add(new PieDAO(4, 5, ANIMATION_WALKING));
-        pieValues.add(new PieDAO(9, 7, ANIMATION_WALKING));
+        pieValues.add(new PieDAO(r.nextInt(GOAL_WALKING_TIME), r.nextInt(GOAL_WALKING_DISTANCE), ANIMATION_WALKING));
+        pieValues.add(new PieDAO(r.nextInt(GOAL_WALKING_TIME), r.nextInt(GOAL_WALKING_DISTANCE), ANIMATION_WALKING));
 
         initPie(mCircularBarPagerSelection1, pieValues.get(0));
         initPie(mCircularBarPagerSelection2, pieValues.get(1));
@@ -335,5 +332,20 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
 
     public void onButtonClick(View view){
         view.setActivated(!view.isActivated());
+
+        if (currentSelection == 0) {
+            currentSelection = view.getId();
+        } else if (pastSelection == 0) {
+            pastSelection = view.getId();
+        } else {
+            View toBeDismissed = findViewById(pastSelection);
+            toBeDismissed.setActivated(false);
+
+            pastSelection = currentSelection;
+            currentSelection = view.getId();
+        }
+
+        initPieContainer();
+        animatePies();
     }
 }
