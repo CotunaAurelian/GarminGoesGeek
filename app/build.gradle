@@ -25,6 +25,8 @@ dependencies {
 
     compile 'com.android.support:appcompat-v7:23.4.0'
 
+    compile 'com.diogobernardino:williamchart:2.2'
+
     //CircularBarPager
     compile 'com.github.orangegangsters:library:1.3.4@aar'
     //CirclePageIndicator
