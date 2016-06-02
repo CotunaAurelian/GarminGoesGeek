@@ -33,6 +33,8 @@
         <item name="progress_pager_on_click_enabled">true</item>
         <item name="progress_arc_clockwise_color">#0093C7</item>
         <item name="progress_arc_counter_clockwise_color">#0093C7</item>
+        <item name="progress_arc_clockwise_outline_color">#0093C7</item>
+        <item name="progress_arc_counter_clockwise_outline_color">#0093C7</item>
         <item name="progress_pager_fill_circle_color">#00000000</item>
     </style>
 

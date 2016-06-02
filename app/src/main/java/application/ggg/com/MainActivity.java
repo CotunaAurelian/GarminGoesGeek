@@ -32,6 +32,7 @@ import com.viewpagerindicator.CirclePageIndicator;
 import application.ggg.com.running.ActivityPiePagerAdapter;
 import application.ggg.com.running.AnimationGamePanel;
 import application.ggg.com.running.PieContentView;
+import application.ggg.com.running.PieDAO;
 
 public class MainActivity extends AppCompatActivity implements OnMenuItemClickListener, OnMenuItemLongClickListener {
 
@@ -74,16 +75,14 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
         gamePanel.setLayoutParams(new LinearLayout.LayoutParams(170, 170));
         containerRunning.addView(gamePanel);
 
-        initPie1();
-        initPie2();
-
+        initPie1(new PieDAO(12, 5));
+        initPie2(new PieDAO(12, 5));
     }
 
-
-    private void initPie1() {
+    private void initPie1(PieDAO pieDAO) {
         View[] views = new View[2];
-        views[0] = new PieContentView(this);
-        views[1] = new PieContentView(this);
+        views[0] = new PieContentView(this, pieDAO, 0);
+        views[1] = new PieContentView(this, pieDAO, 1);
 
         mCircularBarPagerSelection1.setViewPagerAdapter(new ActivityPiePagerAdapter(this, views));
 
@@ -113,10 +112,10 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
         });
     }
 
-    private void initPie2() {
+    private void initPie2(PieDAO pieDAO) {
         View[] views = new View[2];
-        views[0] = new PieContentView(this);
-        views[1] = new PieContentView(this);
+        views[0] = new PieContentView(this, pieDAO, 0);
+        views[1] = new PieContentView(this, pieDAO, 1);
 
         mCircularBarPagerSelection2.setViewPagerAdapter(new ActivityPiePagerAdapter(this, views));
 

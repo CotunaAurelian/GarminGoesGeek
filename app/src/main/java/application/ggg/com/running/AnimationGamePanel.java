@@ -89,7 +89,7 @@ public class AnimationGamePanel extends SurfaceView implements SurfaceHolder.Cal
     }
 
     public void render(Canvas canvas) {
-        canvas.drawColor(Color.WHITE);
+        canvas.drawColor(Color.parseColor("#F5F2F0"));
         elaine.draw(canvas);
     }
 
