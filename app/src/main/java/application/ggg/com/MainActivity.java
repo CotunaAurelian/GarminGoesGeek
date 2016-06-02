@@ -1,7 +1,5 @@
 package application.ggg.com;
 
-import android.animation.PropertyValuesHolder;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentManager;
@@ -15,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -70,6 +69,9 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
     private RelativeLayout containerRunning;
     private RelativeLayout containerWalking;
 
+    private Button mTodayButton;
+    private Button mYesterdayButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +84,13 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
         initPieContainer();
 
         initActivitiesChart();
+
+        initBottomSection();
+    }
+
+    private void initBottomSection(){
+        mTodayButton = (Button) findViewById(R.id.text7);
+        mYesterdayButton = (Button) findViewById(R.id.text6);
     }
 
     private void initActivitiesChart() {
@@ -325,6 +334,9 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
 
     @Override
     public void onMenuItemLongClick(View clickedView, int position) {
-        Toast.makeText(this, "Long clicked on position: " + position, Toast.LENGTH_SHORT).show();
+    }
+
+    public void onButtonClick(View view){
+        view.setActivated(!view.isActivated());
     }
 }

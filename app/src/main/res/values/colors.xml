@@ -26,4 +26,6 @@
 
     <color name="bg_color">#F5F2F0</color>
 
+    <color name="day_color_background_pressed">#272d43</color>
+
 </resources>

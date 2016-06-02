@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="30dp"
+              android:padding="5dp"
+              android:orientation="horizontal">
+
+    <Button
+        android:id="@+id/text0"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:text="Fri"
+        android:textSize="10sp"
+        android:layout_margin="1dp"
+        android:background="@drawable/selection_selector"
+        android:layout_height="match_parent"
+        />
+
+    <Button
+        android:id="@+id/text1"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:text="Sat"
+        android:textSize="10sp"
+        android:layout_margin="1dp"
+        android:background="@drawable/selection_selector"
+        android:layout_height="match_parent"
+        android:onClick="onButtonClick"
+        />
+
+    <Button
+        android:id="@+id/text2"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:text="Sun"
+        android:textSize="10sp"
+        android:layout_margin="1dp"
+        android:background="@drawable/selection_selector"
+        android:layout_height="match_parent"
+        android:onClick="onButtonClick"
+        />
+
+    <Button
+        android:id="@+id/text3"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:text="Mon"
+        android:textSize="10sp"
+        android:layout_margin="1dp"
+        android:background="@drawable/selection_selector"
+        android:layout_height="match_parent"
+        android:onClick="onButtonClick"
+        />
+
+    <Button
+        android:id="@+id/text4"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:text="Tue"
+        android:textSize="10sp"
+        android:layout_margin="1dp"
+        android:background="@drawable/selection_selector"
+        android:layout_height="match_parent"
+        android:onClick="onButtonClick"
+        />
+
+    <Button
+        android:id="@+id/text5"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:text="Wed"
+        android:textSize="10sp"
+        android:layout_margin="1dp"
+        android:background="@drawable/selection_selector"
+        android:layout_height="match_parent"
+        android:onClick="onButtonClick"
+        />
+
+    <Button
+        android:id="@+id/text6"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:text="Thu"
+        android:textSize="10sp"
+        android:layout_margin="1dp"
+        android:background="@drawable/selection_selector"
+        android:layout_height="match_parent"
+        android:onClick="onButtonClick"
+        />
+
+    <Button
+        android:id="@+id/text7"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:text="Fri"
+        android:textSize="10sp"
+        android:layout_margin="1dp"
+        android:background="@drawable/selection_selector"
+        android:layout_height="match_parent"
+        android:onClick="onButtonClick"
+        />
+</LinearLayout>
