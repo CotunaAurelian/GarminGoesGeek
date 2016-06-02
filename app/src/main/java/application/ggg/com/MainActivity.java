@@ -14,12 +14,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -54,7 +52,6 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
     private CircularBarPager mCircularBarPagerSelection4;
 
     private LineCardOne mTopGraphCardConfigurator;
-    private TextView mTopChartTitle;
 
     private static final int BAR_ANIMATION_TIME = 1000;
     private static final int ANIMATION_RUNNING = 1;

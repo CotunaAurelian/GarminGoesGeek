@@ -4,13 +4,20 @@
         <shape android:shape="rectangle">
             <corners android:radius="3dp"/>
             <solid android:color="@color/day_color_background_pressed"/>
+            <padding
+                android:top="5dp"
+                android:bottom="5dp" />
         </shape>
     </item>
     <item android:state_activated="true">
         <shape android:shape="rectangle">
             <corners android:radius="3dp"/>
             <solid android:color="@color/day_color_background_pressed"/>
+            <padding
+                android:top="5dp"
+                android:bottom="5dp" />
         </shape>
+
     </item>
     <item android:drawable="@color/transparent"/>
 </selector>
