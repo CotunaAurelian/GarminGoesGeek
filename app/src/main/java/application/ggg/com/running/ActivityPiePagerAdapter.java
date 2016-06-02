@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 public class ActivityPiePagerAdapter extends PagerAdapter {
 
     private Context mContext;
-    private View[] mViews;
+    public View[] mViews;
 
     public ActivityPiePagerAdapter(Context context, View... views) {
         this.mContext = context;

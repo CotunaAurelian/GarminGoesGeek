@@ -11,10 +11,12 @@ import application.ggg.com.R;
  * Created by simina on 6/2/16.
  */
 public class PieContentView extends LinearLayout {
+    private PieDAO pieDAO;
 
     public PieContentView(Context context, PieDAO pieDAO, int index) {
         super(context);
 
+        this.pieDAO = pieDAO;
         initView(pieDAO, index);
     }
 
@@ -33,4 +35,11 @@ public class PieContentView extends LinearLayout {
         }
     }
 
+    public PieDAO getPieDAO() {
+        return pieDAO;
+    }
+
+    public void setPieDAO(PieDAO pieDAO) {
+        this.pieDAO = pieDAO;
+    }
 }

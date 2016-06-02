@@ -24,6 +24,7 @@ import com.yalantis.contextmenu.lib.interfaces.OnMenuItemClickListener;
 import com.yalantis.contextmenu.lib.interfaces.OnMenuItemLongClickListener;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.github.OrangeGangsters.circularbarpager.library.CircularBarPager;
@@ -47,6 +48,14 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
     private CircularBarPager mCircularBarPagerSelection4;
 
     private static final int BAR_ANIMATION_TIME = 1000;
+    private static final int ANIMATION_RUNNING = 1;
+    private static final int ANIMATION_WALKING = 2;
+
+    private static final int GOAL_RUNNING_TIME = 10;
+    private static final int GOAL_RUNNING_DISTANCE = 10;
+    private static final int GOAL_WALKING_TIME = 10;
+    private static final int GOAL_WALKING_DISTANCE = 10;
+    private List<PieDAO> pieValues;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,16 +66,16 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
         initToolbar();
 
         initPieContainer();
-        initPieContainer();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mCircularBarPagerSelection1.getCircularBar().animateProgress(0, 80, 1000);
-        mCircularBarPagerSelection2.getCircularBar().animateProgress(0, 80, 1000);
-        mCircularBarPagerSelection3.getCircularBar().animateProgress(0, 80, 1000);
-        mCircularBarPagerSelection4.getCircularBar().animateProgress(0, 80, 1000);
+
+        mCircularBarPagerSelection1.getCircularBar().animateProgress(0, pieValues.get(0).getTime() * 100 / GOAL_RUNNING_TIME, 1000);
+        mCircularBarPagerSelection2.getCircularBar().animateProgress(0, pieValues.get(1).getTime() * 100 / GOAL_RUNNING_TIME, 1000);
+        mCircularBarPagerSelection3.getCircularBar().animateProgress(0, pieValues.get(2).getTime() * 100 / GOAL_WALKING_TIME, 1000);
+        mCircularBarPagerSelection4.getCircularBar().animateProgress(0, pieValues.get(3).getTime() * 100 / GOAL_WALKING_TIME, 1000);
     }
 
     private void initPieContainer() {
@@ -76,22 +85,30 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
         mCircularBarPagerSelection4 = (CircularBarPager) findViewById(R.id.circularBarPager4);
 
         RelativeLayout containerRunning = (RelativeLayout) findViewById(R.id.containerRunning);
-        AnimationGamePanel gamePanelRunning = new AnimationGamePanel(this);
+        AnimationGamePanel gamePanelRunning = new AnimationGamePanel(this, ANIMATION_RUNNING);
         gamePanelRunning.setLayoutParams(new LinearLayout.LayoutParams(170, 170));
         containerRunning.addView(gamePanelRunning);
 
         RelativeLayout containerWalking = (RelativeLayout) findViewById(R.id.containerWalking);
-        AnimationGamePanel gamePanelWalking = new AnimationGamePanel(this);
+        AnimationGamePanel gamePanelWalking = new AnimationGamePanel(this, ANIMATION_WALKING);
         gamePanelWalking.setLayoutParams(new LinearLayout.LayoutParams(170, 170));
         containerWalking.addView(gamePanelWalking);
 
-        initPie(mCircularBarPagerSelection1, new PieDAO(12, 5));
-        initPie(mCircularBarPagerSelection2, new PieDAO(12, 5));
-        initPie(mCircularBarPagerSelection3, new PieDAO(12, 5));
-        initPie(mCircularBarPagerSelection4, new PieDAO(12, 5));
+        pieValues = new LinkedList<>();
+        // Running
+        pieValues.add(new PieDAO(8, 8, ANIMATION_RUNNING));
+        pieValues.add(new PieDAO(7, 5, ANIMATION_RUNNING));
+        // Walking
+        pieValues.add(new PieDAO(4, 5, ANIMATION_WALKING));
+        pieValues.add(new PieDAO(9, 7, ANIMATION_WALKING));
+
+        initPie(mCircularBarPagerSelection1, pieValues.get(0));
+        initPie(mCircularBarPagerSelection2, pieValues.get(1));
+        initPie(mCircularBarPagerSelection3, pieValues.get(2));
+        initPie(mCircularBarPagerSelection4, pieValues.get(3));
     }
 
-    private void initPie(final CircularBarPager circularBarPager, PieDAO pieDAO) {
+    private void initPie(final CircularBarPager circularBarPager, final PieDAO pieDAO) {
         View[] views = new View[2];
         views[0] = new PieContentView(this, pieDAO, 0);
         views[1] = new PieContentView(this, pieDAO, 1);
@@ -110,13 +127,24 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
         circlePageIndicator.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener(){
             @Override
             public void onPageSelected(int position) {
-                if(circularBarPager!= null && circularBarPager.getCircularBar() != null){
-                    switch (position){
+                ActivityPiePagerAdapter adapter = (ActivityPiePagerAdapter)circularBarPager.getViewPager().getAdapter();
+                PieDAO tempPieDAO = ((PieContentView)adapter.mViews[0]).getPieDAO();
+
+                if (circularBarPager!= null && circularBarPager.getCircularBar() != null){
+                    switch (position) {
                         case 0:
-                            circularBarPager.getCircularBar().animateProgress(0, 80, BAR_ANIMATION_TIME);
+                            if (tempPieDAO.getActivityType() == ANIMATION_RUNNING) {
+                                circularBarPager.getCircularBar().animateProgress(0, tempPieDAO.getTime() * 100 / GOAL_RUNNING_TIME, BAR_ANIMATION_TIME);
+                            } else {
+                                circularBarPager.getCircularBar().animateProgress(0, tempPieDAO.getTime() * 100 / GOAL_WALKING_TIME, BAR_ANIMATION_TIME);
+                            }
                             break;
                         case 1:
-                            circularBarPager.getCircularBar().animateProgress(80, 20, BAR_ANIMATION_TIME);
+                            if (tempPieDAO.getActivityType() == ANIMATION_RUNNING) {
+                                circularBarPager.getCircularBar().animateProgress(tempPieDAO.getTime() * 100 / GOAL_RUNNING_TIME, tempPieDAO.getDistance() * 100 / GOAL_RUNNING_DISTANCE, BAR_ANIMATION_TIME);
+                            } else {
+                                circularBarPager.getCircularBar().animateProgress(tempPieDAO.getTime() * 100 / GOAL_WALKING_TIME, tempPieDAO.getDistance() * 100 / GOAL_WALKING_DISTANCE, BAR_ANIMATION_TIME);
+                            }
                             break;
                     }
                 }

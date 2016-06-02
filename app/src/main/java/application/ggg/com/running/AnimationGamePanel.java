@@ -33,15 +33,21 @@ public class AnimationGamePanel extends SurfaceView implements SurfaceHolder.Cal
         this.avgFps = avgFps;
     }
 
-    public AnimationGamePanel(Context context) {
+    public AnimationGamePanel(Context context, int animationType) {
         super(context);
         // adding the callback (this) to the surface holder to intercept events
         getHolder().addCallback(this);
 
         // create Elaine and load bitmap
-        elaine = new StickmanAnimated(BitmapFactory.decodeResource(getResources(), R.mipmap.running), 10, 50    // initial position
-                        , 123, 128    // width and height of sprite
-                        , 20, 7);    // FPS and number of frames in the animation
+        if (animationType == 1) {
+            elaine = new StickmanAnimated(BitmapFactory.decodeResource(getResources(), R.mipmap.running), 10, 50    // initial position
+                    , 123, 128    // width and height of sprite
+                    , 21, 7);    // FPS and number of frames in the animation
+        } else {
+            elaine = new StickmanAnimated(BitmapFactory.decodeResource(getResources(), R.mipmap.walk), 50, 40    // initial position
+                    , 64, 128    // width and height of sprite
+                    , 24, 12);    // FPS and number of frames in the animation
+        }
 
         // create the game loop thread
         thread = new MainThread(getHolder(), this);

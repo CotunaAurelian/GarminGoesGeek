@@ -4,27 +4,37 @@ package application.ggg.com.running;
  * Created by simina on 6/2/16.
  */
 public class PieDAO {
-    private float time;
-    private float distance;
+    private int time;
+    private int distance;
+    private int activityType;
 
-    public PieDAO(float time, float distance) {
+    public PieDAO(int time, int distance, int activityType) {
         this.time = time;
         this.distance = distance;
+        this.activityType = activityType;
     }
 
-    public float getTime() {
+    public int getTime() {
         return time;
     }
 
-    public void setTime(float time) {
+    public void setTime(int time) {
         this.time = time;
     }
 
-    public float getDistance() {
+    public int getDistance() {
         return distance;
     }
 
-    public void setDistance(float distance) {
+    public void setDistance(int distance) {
         this.distance = distance;
+    }
+
+    public int getActivityType() {
+        return activityType;
+    }
+
+    public void setActivityType(int activityType) {
+        this.activityType = activityType;
     }
 }
