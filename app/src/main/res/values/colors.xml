@@ -5,4 +5,11 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="mainBackgroundColor">#FFFFFF</color>
+
+
+    <color name="black_windows_color">#1A1A1A</color>
+    <color name="palette_interface_40">#282828</color>
+    <color name="palette_interface_54">#363636</color>
+    <color name="grey_color">#646464</color>
+    <color name="palette_gray_5">#E6E6E6</color>
 </resources>
