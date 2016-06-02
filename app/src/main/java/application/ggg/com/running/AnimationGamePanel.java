@@ -7,6 +7,7 @@ import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.PixelFormat;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -37,12 +38,13 @@ public class AnimationGamePanel extends SurfaceView implements SurfaceHolder.Cal
         super(context);
         // adding the callback (this) to the surface holder to intercept events
         getHolder().addCallback(this);
+        getHolder().setFormat(PixelFormat.TRANSPARENT);
 
         // create Elaine and load bitmap
         if (animationType == 1) {
             elaine = new StickmanAnimated(BitmapFactory.decodeResource(getResources(), R.mipmap.running), 10, 50    // initial position
                     , 123, 128    // width and height of sprite
-                    , 21, 7);    // FPS and number of frames in the animation
+                    , 14, 7);    // FPS and number of frames in the animation
         } else {
             elaine = new StickmanAnimated(BitmapFactory.decodeResource(getResources(), R.mipmap.walk), 50, 40    // initial position
                     , 64, 128    // width and height of sprite

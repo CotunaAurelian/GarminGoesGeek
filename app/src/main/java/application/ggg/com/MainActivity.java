@@ -1,6 +1,7 @@
 package application.ggg.com;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
@@ -11,12 +12,15 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.yalantis.contextmenu.lib.ContextMenuDialogFragment;
 import com.yalantis.contextmenu.lib.MenuObject;
 import com.yalantis.contextmenu.lib.MenuParams;
@@ -57,6 +61,9 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
     private static final int GOAL_WALKING_DISTANCE = 10;
     private List<PieDAO> pieValues;
 
+    private RelativeLayout containerRunning;
+    private RelativeLayout containerWalking;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,12 +91,12 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
         mCircularBarPagerSelection3 = (CircularBarPager) findViewById(R.id.circularBarPager3);
         mCircularBarPagerSelection4 = (CircularBarPager) findViewById(R.id.circularBarPager4);
 
-        RelativeLayout containerRunning = (RelativeLayout) findViewById(R.id.containerRunning);
+        containerRunning = (RelativeLayout) findViewById(R.id.containerRunning);
         AnimationGamePanel gamePanelRunning = new AnimationGamePanel(this, ANIMATION_RUNNING);
         gamePanelRunning.setLayoutParams(new LinearLayout.LayoutParams(170, 170));
         containerRunning.addView(gamePanelRunning);
 
-        RelativeLayout containerWalking = (RelativeLayout) findViewById(R.id.containerWalking);
+        containerWalking = (RelativeLayout) findViewById(R.id.containerWalking);
         AnimationGamePanel gamePanelWalking = new AnimationGamePanel(this, ANIMATION_WALKING);
         gamePanelWalking.setLayoutParams(new LinearLayout.LayoutParams(170, 170));
         containerWalking.addView(gamePanelWalking);
@@ -106,6 +113,42 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
         initPie(mCircularBarPagerSelection2, pieValues.get(1));
         initPie(mCircularBarPagerSelection3, pieValues.get(2));
         initPie(mCircularBarPagerSelection4, pieValues.get(3));
+    }
+
+    private void showActivityPies() {
+        YoYo.with(Techniques.FadeIn).duration(BAR_ANIMATION_TIME/2).playOn(findViewById(R.id.cardRunning));
+        YoYo.with(Techniques.FadeIn).duration(BAR_ANIMATION_TIME/2).playOn(findViewById(R.id.cardWalking));
+
+        pieValues = new LinkedList<>();
+        // Running
+        pieValues.add(new PieDAO(8, 8, ANIMATION_RUNNING));
+        pieValues.add(new PieDAO(7, 5, ANIMATION_RUNNING));
+        // Walking
+        pieValues.add(new PieDAO(4, 5, ANIMATION_WALKING));
+        pieValues.add(new PieDAO(9, 7, ANIMATION_WALKING));
+
+        initPie(mCircularBarPagerSelection1, pieValues.get(0));
+        initPie(mCircularBarPagerSelection2, pieValues.get(1));
+        initPie(mCircularBarPagerSelection3, pieValues.get(2));
+        initPie(mCircularBarPagerSelection4, pieValues.get(3));
+
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // Ugly, I know :)
+                containerRunning.setVisibility(View.VISIBLE);
+                containerWalking.setVisibility(View.VISIBLE);
+            }
+        }, BAR_ANIMATION_TIME);
+    }
+
+    private void hideActivityPies() {
+        containerRunning.setVisibility(View.INVISIBLE);
+        containerWalking.setVisibility(View.INVISIBLE);
+
+        YoYo.with(Techniques.FadeOut).duration(BAR_ANIMATION_TIME/2).playOn(findViewById(R.id.cardRunning));
+        YoYo.with(Techniques.FadeOut).duration(BAR_ANIMATION_TIME/2).playOn(findViewById(R.id.cardWalking));
     }
 
     private void initPie(final CircularBarPager circularBarPager, final PieDAO pieDAO) {
@@ -247,6 +290,12 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
     @Override
     public void onMenuItemClick(View clickedView, int position) {
         Toast.makeText(this, "Clicked on position: " + position, Toast.LENGTH_SHORT).show();
+
+        if (position == 1) {
+            hideActivityPies();
+        } else if (position == 2) {
+            showActivityPies();
+        }
     }
 
     @Override
