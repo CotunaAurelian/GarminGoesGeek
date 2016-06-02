@@ -4,6 +4,12 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="walk_color">#439727</color>
+    <color name="run_color">#0093C7</color>
+
+    <color name="color_dark_orange">#E64A19</color>
+    <color name="color_deep_purple">#7B1FA2</color>
+
     <color name="mainBackgroundColor">#FFFFFF</color>
 
     <color name="very_light_grey">#e4e7ed</color>

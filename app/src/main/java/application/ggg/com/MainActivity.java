@@ -1,10 +1,13 @@
 package application.ggg.com;
 
+import android.animation.PropertyValuesHolder;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.Menu;
@@ -47,6 +50,9 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
     private CircularBarPager mCircularBarPagerSelection3;
     private CircularBarPager mCircularBarPagerSelection4;
 
+    private LineCardOne mTopGraphCardConfigurator;
+    private TextView mTopChartTitle;
+
     private static final int BAR_ANIMATION_TIME = 1000;
     private static final int ANIMATION_RUNNING = 1;
     private static final int ANIMATION_WALKING = 2;
@@ -66,6 +72,14 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
         initToolbar();
 
         initPieContainer();
+        initPieContainer();
+
+        initActivitiesChart();
+    }
+
+    private void initActivitiesChart() {
+        mTopGraphCardConfigurator = new LineCardOne((CardView) findViewById(R.id.top_graph_card), this);
+        mTopGraphCardConfigurator.show();
     }
 
     @Override
@@ -246,7 +260,22 @@ public class MainActivity extends AppCompatActivity implements OnMenuItemClickLi
 
     @Override
     public void onMenuItemClick(View clickedView, int position) {
-        Toast.makeText(this, "Clicked on position: " + position, Toast.LENGTH_SHORT).show();
+
+        switch (position) {
+            default:
+            case 0:
+                mTopGraphCardConfigurator.updateData(position - 1, R.color.walk_color);
+                break;
+            case 1:
+                mTopGraphCardConfigurator.updateData(position - 1, R.color.run_color);
+                break;
+            case 2:
+                mTopGraphCardConfigurator.updateData(position - 1, R.color.color_dark_orange);
+                break;
+            case 3:
+                mTopGraphCardConfigurator.updateData(position - 1, R.color.color_deep_purple);
+                break;
+        }
     }
 
     @Override
